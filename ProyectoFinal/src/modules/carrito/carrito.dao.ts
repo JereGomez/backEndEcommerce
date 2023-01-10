@@ -42,7 +42,7 @@ export class CarritosDAOMongo implements DAOInterface<CarritoDTO, number>{
 
     async getAll(id: number){
         try{
-            const item = await this.carrModel.findne({'_id': id});
+            const item = await this.carrModel.findone({'_id': id});
             const items = item.productos
             return items;
         }
