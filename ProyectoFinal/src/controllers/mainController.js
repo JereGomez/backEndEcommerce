@@ -5,7 +5,7 @@ import os from 'os';
 
 
 async function home (req, res){
-    res.redirect('api/carrito/productos');
+    res.redirect('api/productos');
 }
 
 async function getServerInfo(req, res){
