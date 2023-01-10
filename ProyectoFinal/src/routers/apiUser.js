@@ -34,8 +34,6 @@ passport.deserializeUser(async (id, done) => {
 apiUser.post('/signup', passport.authenticate("signup", { failureRedirect: '/api/user/signup'}), postSignup);
 apiUser.post("/login", passport.authenticate("login", {failureRedirect: '/api/user/login'}), postLogin); 
 //GET
-apiUser.get('/signup' , signupView);
-apiUser.get('/login' , loginView);
 apiUser.get('/logout', logout)
 
 

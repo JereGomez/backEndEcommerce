@@ -5,7 +5,7 @@ import dotenv from 'dotenv-webpack';
 
 export default {
   mode: "production",
-  entry: "./server.ts",
+  entry: "./index.ts",
   target: "node",
   externals: [nodeExternals()],
   output: {
