@@ -5,6 +5,7 @@ function authorization (req, res, next){
   if(!req.headers['authorization']) {
     res.send('No authorization header')
   } 
+  else{
   const bearerHeader = req.headers['authorization'];
   const token = (bearerHeader.split(' '))[1];
   if(bearerHeader != undefined && req.isAuthenticated()){ //req.session.user != undefined
@@ -22,6 +23,8 @@ function authorization (req, res, next){
       res.status(403).send('Unouthorized, token missing or user not logged in');
     }
 
+  }
+  
   
 }
 
