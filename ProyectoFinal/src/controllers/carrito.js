@@ -72,15 +72,6 @@ async function vaciarCarrito(req, res, next){
     }
 }
 
-async function carritoView (req, res, next){
-    try{
-        res.sendFile(__dirname + '/public/views/carro.html')
-    }
-    catch(err){
-                next({mensaje: "ocurrio un error en carritoView carrito controller", error: err});
-    }
-}
-
 
 
 export {
@@ -89,6 +80,5 @@ export {
     agrearAlCarrito,
     eliminarCarritoCompleto,
     eliminarProd,
-    vaciarCarrito,
-    carritoView
+    vaciarCarrito
 }

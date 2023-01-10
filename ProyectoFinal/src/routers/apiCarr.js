@@ -2,11 +2,10 @@
 import express from 'express';
 const {Router} = express //se importa la funcion router
 const apiCarr = Router();
-import {carritoView , eliminarProd, vaciarCarrito, agrearAlCarrito, crearCarrito, eliminarCarritoCompleto, getAllProds} from '../controllers/carrito.js'
+import { eliminarProd, vaciarCarrito, agrearAlCarrito, crearCarrito, eliminarCarritoCompleto, getAllProds} from '../controllers/carrito.js'
 import { authorization } from '../utils/middleware.js';
 
 //GET
-apiCarr.get('/', carritoView )
 apiCarr.get ('/productos', authorization, getAllProds); //traer productos de carrito especifico
 //POST
 apiCarr.post('/', crearCarrito);

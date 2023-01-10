@@ -13,22 +13,6 @@ const app = express();
 connect(app);
 
 
-//HANDLEBARS
-/*
-import handlebars from "express-handlebars"
-const hbs=handlebars.create({//objeto para definir opciones de configuracion
-    extname:".hbs", //nombre de extencion
-    defaultLayout:"index.hbs",
-    layoutsDir:"./public/views/pages", //direccion de layouts
-    partialsDir:"./public/views/partials/" //direcciones parciales
-});
-
-app.engine("hbs", hbs.engine);// declaramos el motor a utilizar, y pasamos la funcion engine del objeto handlebars creado anteriormemnte. Aqui se renderiza el codigo
-app.set("view engine", "hbs");
-app.set("views", "./public/views");
-
-*/
-
 //Utilizar json en las request
 app.use(passport.initialize());
 app.use(passport.session());
@@ -40,7 +24,7 @@ app.use('/api/user' , apiUser);
 app.use('/api/productos' , apiProd ); //localHost:8080/api/productos , a partir de esa direccion se usa el router apiProd
 app.use('/api/carrito' , apiCarr ); //localHost:8080/api/carrito , a partir de esa direccion se usa el router apiCarr
 app.use('/api/ordenes' , apiOrden);
-app.use(errorHandler);
+
 
 
 
