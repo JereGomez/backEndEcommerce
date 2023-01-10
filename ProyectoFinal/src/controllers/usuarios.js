@@ -5,7 +5,6 @@ const UsuariosDAO = DAOS.getUsuariosDAO();
 const CarritosDAO = DAOS.getCarritosDAO();
 import {hashPassword , comparePassword} from "../utils/hash.js"
 import {mailToAdmin, mailToUser} from '../utils/email.js'
-import {sendMessage} from '../utils/wpp.js'
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 
@@ -26,7 +25,6 @@ async function signup(req, username, password, done){
                 const newUser = await UsuariosDAO.save(user);
                 await mailToAdmin(newUser);
                 await mailToUser({email: username}, "confirmacion");
-                //await sendMessage(newUser);
                 return done(null, newUser);
             }
             return done(new Error("Missing signup data."), null)
