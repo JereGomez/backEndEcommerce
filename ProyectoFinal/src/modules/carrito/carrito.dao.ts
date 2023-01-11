@@ -42,7 +42,7 @@ export class CarritosDAOMongo implements DAOInterface<CarritoDTO, number>{
 
     async getAll(id: number){
         try{
-            const item = await this.carrModel.findone({'_id': id});
+            const item = await this.carrModel.findOne({'_id': id});
             const items = item.productos
             return items;
         }
@@ -88,14 +88,14 @@ export class CarritosDAOMongo implements DAOInterface<CarritoDTO, number>{
         try{
             const carrito = await this.carrModel.findOne({'_id': carritoID});
             let productosAux = carrito.productos; //obtengo productos
-            console.log((carrito.productos).length)
+
             for(let i = 0; i<= (carrito.productos).length-1 ; i++){
                 if((carrito.productos)[i]._id == productoID){
                     carrito.productos.splice(i,1);
                     break
                 }
             }
-            console.log((carrito.productos).length)
+
             await this.updateById(carrito, carritoID)
             //await this.carrModel.updateOne({'_id': idCarr} , {$set: {productos: productos}});
         }

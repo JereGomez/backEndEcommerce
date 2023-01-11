@@ -9,7 +9,7 @@ import {mailToUser} from '../utils/email.js'
 async function getAllOrders(req, res, next){
     try{
         const ordenes = await OrdenesDAO.getAll();
-        res.send(ordenes)
+        res.send({ordenes})
     }
     catch(err){
         next({mensaje: "ocurrio un error en getAllOrders ordenes controller", error: err});
@@ -47,7 +47,7 @@ async function createOrden(req, res, next){
                     }
         const nuevaOrden = await OrdenesDAO.save(orden);
         mailToUser({email: user.username, orden: nuevaOrden}, 'orden');
-        res.status(201).json(nuevaOrden)
+        res.status(201).json({nuevaOrden})
     }
     catch(err){
         next({mensaje: "ocurrio un error en createOrden ordenes controller", error: err});
@@ -58,7 +58,7 @@ async function updateOrden(req, res, next){
         const items = req.body;
         const id = req.params.id;
         await OrdenesDAO.updateById(items , id);
-        res.status(200).send(`Oden actualizada`)
+        res.status(200).send({Acutalizada: `Oden con id ${id}actualizada`})
     }
     catch(err){
         next({mensaje: "ocurrio un error en updateOrden ordenes controller", error: err});
@@ -68,7 +68,7 @@ async function deleteOrden(req, res, next){
     try{
         const id = req.params.id;
         await OrdenesDAO.deleteById(id);
-        res.status(200)
+        res.status(200).send({eliminada: `Orden con id ${req.params.id} eliminada`})
     }
     catch(err){
         next({mensaje: "ocurrio un error en deleteOrden ordenes controller", error: err});

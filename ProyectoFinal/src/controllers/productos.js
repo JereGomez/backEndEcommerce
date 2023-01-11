@@ -21,7 +21,7 @@ async function getById(req ,res, next){
             res.send({error: `Producto con id:${id} no encontrado`});
         }
         else{
-            res.send(await ProductosDAO.getById(id));
+            res.send({producto: await ProductosDAO.getById(id)});
 
     }
     }
@@ -51,11 +51,10 @@ async function nuevoProd(req, res, next){
 async function actualizarProd(req, res, next){
     try{
         if(req.session.user.admin === true){
-            console.log('admin true y actualizo')
             const item = {...req.body};
             const id = req.params.id; 
             const nuevo = await ProductosDAO.updateById(item, id);
-            res.send(nuevo); 
+            res.send({nuevoProducto: nuevo}); 
         }
         else{
             res.send({error:" -2, descripcion: ruta 'http://localhost:8080/api/productos/:id' método 'PUT' no autorizada"})
@@ -71,6 +70,7 @@ async function eliminarProd(req, res, next){
         if(req.session.user.admin === true){    
             const id = req.params.id;
             await ProductosDAO.deleteById(id);
+            res.send({eliminado: `Producto con el id ${id} eliminado`})
         }
         else{
             res.send({error:" -1, descripcion: ruta 'http://localhost:8080/api/productos/:id' método 'DELETE' no autorizada"})

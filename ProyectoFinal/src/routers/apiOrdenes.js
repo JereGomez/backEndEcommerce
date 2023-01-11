@@ -3,6 +3,8 @@ import express from 'express';
 const {Router} = express //se importa la funcion router
 const apiOrden = Router();
 import { authorization } from '../utils/middleware.js';
+import errorHandler from '../utils/errorHandler.js';
+
 import {getAllOrders,
     getUserOrden,
     getOrdenById,
@@ -21,4 +23,5 @@ apiOrden.put('/:id', authorization, updateOrden);
 //DELETE
 apiOrden.delete('/:id', authorization, deleteOrden);
 
+apiOrden.use(errorHandler)
 export  {apiOrden}

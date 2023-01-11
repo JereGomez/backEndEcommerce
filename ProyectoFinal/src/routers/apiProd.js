@@ -3,6 +3,9 @@ import express from 'express';
 const {Router} = express //se importa la funcion router
 const apiProd = Router();
 import { authorization } from '../utils/middleware.js';
+import errorHandler from '../utils/errorHandler.js';
+
+
 import {actualizarProd,
     eliminarProd,
     getAll,
@@ -21,4 +24,5 @@ apiProd.put('/:id' , authorization, actualizarProd);
 //DELETE
 apiProd.delete('/:id' , authorization, eliminarProd);
 
+apiProd.use(errorHandler)
 export  {apiProd}

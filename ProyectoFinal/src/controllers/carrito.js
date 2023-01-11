@@ -8,7 +8,7 @@ async function getAllProds(req, res, next){
     try{
         const carr = req.session.user.carrito
         const productos = await CarritosDAO.getAll(carr);
-        res.send(productos);
+        res.send({productos});
     }
     catch(err){
         next({mensaje: "ocurrio un error en getAllProds carrito controller", error: err});
@@ -34,6 +34,7 @@ async function agrearAlCarrito(req, res, next){
     try{
         const carr = await UsuariosDao.getCarId(req.session.user);
         await CarritosDAO.addProd(carr , req.params.id_prod) //pasamos id del carrito y id del producto
+        res.send({agregado:`Producto con id ${req.params.id_prod} agregado`});
     }
     catch(err){
                 next({mensaje: "ocurrio un error en agergarAlCarrito carrito controller", error: err});
@@ -51,10 +52,11 @@ async function eliminarCarritoCompleto(req, res, next){
 
 async function eliminarProd(req, res, next){
     try{
-        console.log('entro a elminar')
+
         const carr = await UsuariosDao.getCarId(req.session.user);
         await CarritosDAO.deleteProd(carr , req.params.id_prod);
-        console.log('eliminado') 
+        res.send({eliminado: `Producto con el id ${req.params.id_prod} eliminado`})
+
     }
     catch(err){
                 next({mensaje: "ocurrio un error en eliminarProd carrito controller", error: err});
@@ -66,6 +68,7 @@ async function vaciarCarrito(req, res, next){
         const idCarr = await UsuariosDao.getCarId(req.session.user);
         const carr = {productos: []}
         await CarritosDAO.updateById(carr , idCarr);
+        res.send({Vaciado: `Carrito con el id ${id} vaciado`})
     }
     catch(err){
                 next({mensaje: "ocurrio un error en vaciarCarrito carrito controller", error: err});

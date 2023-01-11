@@ -6,7 +6,7 @@ import os from 'os';
 
 async function home (req, res){
     res.redirect('api/productos');
-}
+};
 
 async function getServerInfo(req, res){
    const info = {
@@ -16,7 +16,7 @@ async function getServerInfo(req, res){
     pid: { description: 'id de proceso', value: process.pid },
     numeroCPUS: {descrition:'cantidad de CPUS en uso' , value: os.cpus().length}
    }
-   res.status(200).send(info)
+   res.status(200).send({ServerInfo: info})
 }
 
 

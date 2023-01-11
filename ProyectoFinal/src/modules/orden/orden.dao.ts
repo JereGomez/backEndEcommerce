@@ -31,7 +31,6 @@ export class OrdenesDAOMongo implements DAOInterface <OrdenDTO , string> {
     async getById(id: string | undefined) {
         try{
             const orden = await this.ordenModel.findOne({'_id': id})
-            console.log(orden)
             return orden;
         }
         catch(err){

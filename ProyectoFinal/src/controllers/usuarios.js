@@ -7,14 +7,13 @@ import {hashPassword , comparePassword} from "../utils/hash.js"
 import {mailToAdmin, mailToUser} from '../utils/email.js'
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
-import { networkInterfaces } from 'os';
 
 
-async function signup(req, username, password, next){
+async function signup(req, username, password, done){
     try{
         const auxUser = await UsuariosDAO.getByUsername(username);
         if (auxUser) {
-            next({mensaje: `error en signup usuarios controller`, error: "User Already exists"})
+            done(new Error(`User already exists`), null)
         }
         let { nombre, edad, direccion, telefono, imagen} = req.body;
 
@@ -28,12 +27,12 @@ async function signup(req, username, password, next){
                 await mailToUser({email: username}, "confirmacion");
                 return done(null, newUser);
             }
-            next({mensaje: `error en signup usuarios controller`, error: "Missing signup data."})
+            done(new Error(`Missing nignup data`), null)
         }
-        next({mensaje: `error en signup usuarios controller`, error: "Password fields dont match"})
+        done(new Error(`Password fields dont match`), null)
         }
     catch(err){
-        next({mensaje: `error en signup usuarios controller`, error: err})
+        done(new Error(`Error en signup ${err}`), null)
     }
 }
 
@@ -44,27 +43,26 @@ async function login( username, password, done){
         const user = await UsuariosDAO.getByUsername(username);
         const passHash = user.password;
         if (!user || !comparePassword(password, passHash)) {
-            next({mensaje: `error en login usuarios controller`, error: "Invalid username or password"})
+            done(new Error(`invalid username or password`), null)
         }
         return done(null, user);
-
     }
     catch(err){
-        next({mensaje: "ocurrio un error en login usuarios controller", error: err});
+        done(new Error(`Error en login ${err}`, null))
     }
 }
 
-async function postSignup(req, res, next){
+async function postSignup(req, res, done){
     try{
         req.session.user = req.user;
-        res.redirect("/api/user/login");
+        res.send({UsuarioCreado: req.user});
     }
     catch(err){
-        next({mensaje: "ocurrio un error en postSignup usuarios controller", error: err});
+        done(new Error(`Error en postSignup ${err}`, null))
     }
 }
 
-async function postLogin(req, res, next){
+async function postLogin(req, res, done){
     try{
         //GENERAR Y ENVIAR JWT TOKEN PARA AUTENTICACION DE RUTAS LUEGO DEL LOG IN
         const user = req.body.username;
@@ -73,22 +71,22 @@ async function postLogin(req, res, next){
         res.send({token});
     }
     catch(err){
-        next({mensaje: "ocurrio un error en postLogin usuarios controller", error: err});
+        done(new Error(`Error en postLogin ${err}`, null))
     }
 }
 
-async function logout(req, res, next){
+async function logout(req, res, done){
     try{
         req.session.destroy( (err)=>{
             if (err)   res.redirect('/')
         });
         req.logout(()=>{
-            res.redirect('/api/user/login')
+            res.send('User logged out')
         })
 
     }
     catch(err){
-        next({mensaje: "ocurrio un error en logout usuarios controller", error: err});
+        done(new Error(`Error en logout ${err}`, null))
     }
 }
 
