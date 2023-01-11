@@ -4,7 +4,7 @@ import { CarritoDTO } from '../carrito/carrito.dto.js';
 const {Schema , model} = mongoose;
 
 const CarritosSchema = new Schema<CarritoDTO>({
-    productos:  Array<ProductoDTO>,//por defecto es un array vacio
+    productos:  [],//por defecto es un array vacio
     email: {type: String, require: true},
     direccionEntrega: {type: String, require: true}
 }, {timestamps: true});
