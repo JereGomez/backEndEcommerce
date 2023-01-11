@@ -8,8 +8,14 @@ import {mailToUser} from '../utils/email.js'
 
 async function getAllOrders(req, res, next){
     try{
-        const ordenes = await OrdenesDAO.getAll();
-        res.send({ordenes})
+        if(req.session.user.admin === true){
+            const ordenes = await OrdenesDAO.getAll();
+            res.send({ordenes})
+        }
+        else{
+            res.send({error: "NO autorizado para esta peticion"})
+        }
+
     }
     catch(err){
         next({mensaje: "ocurrio un error en getAllOrders ordenes controller", error: err});
