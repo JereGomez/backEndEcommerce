@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 
 
-async function signup(req, username, password, done){
+async function signup(req, username, password, done, next){
     try{
         const auxUser = await UsuariosDAO.getByUsername(username);
         if (auxUser) {
@@ -21,7 +21,7 @@ async function signup(req, username, password, done){
             if(username, password, nombre, edad, direccion, telefono, imagen){
                 const user = {username, nombre, password, edad, direccion, telefono, imagen};
                 user.password = hashPassword(password);
-                user.carrito = await crearCarrito;
+                user.carrito = await crearCarrito();
                 const newUser = await UsuariosDAO.save(user);
                 await mailToAdmin(newUser);
                 await mailToUser({email: username}, "confirmacion");
@@ -38,7 +38,7 @@ async function signup(req, username, password, done){
 
 
 
-async function login( username, password, done){
+async function login( username, password, done, next){
     try{
         const user = await UsuariosDAO.getByUsername(username);
         const passHash = user.password;
@@ -53,7 +53,7 @@ async function login( username, password, done){
     }
 }
 
-async function postSignup(req, res){
+async function postSignup(req, res, next){
     try{
         req.session.user = req.user;
         res.redirect("/api/user/login");
@@ -63,7 +63,7 @@ async function postSignup(req, res){
     }
 }
 
-async function postLogin(req, res){
+async function postLogin(req, res, next){
     try{
         //GENERAR Y ENVIAR JWT TOKEN PARA AUTENTICACION DE RUTAS LUEGO DEL LOG IN
         const user = req.body.username;
@@ -76,7 +76,7 @@ async function postLogin(req, res){
     }
 }
 
-async function logout(req, res){
+async function logout(req, res, next){
     try{
         req.session.destroy( (err)=>{
             if (err)   res.redirect('/')

@@ -6,7 +6,7 @@ const OrdenesDAO  = DAOS.getOrdenesDAO();
 const CarritosDAO = DAOS.getCarritosDAO();
 import {mailToUser} from '../utils/email.js'
 
-async function getAllOrders(req, res){
+async function getAllOrders(req, res, next){
     try{
         const ordenes = await OrdenesDAO.getAll();
         res.send(ordenes)
@@ -15,7 +15,7 @@ async function getAllOrders(req, res){
         next({mensaje: "ocurrio un error en getAllOrders ordenes controller", error: err});
     }
 }
-async function getUserOrden(req, res){
+async function getUserOrden(req, res, next){
     try{
         const user = req.session.user.username;
         const ordenes = await OrdenesDAO.getByUsername(user);
@@ -25,7 +25,7 @@ async function getUserOrden(req, res){
         next({mensaje: "ocurrio un error en getUserOrden ordenes controller", error: err});
     }
 }
-async function getOrdenById(req, res){
+async function getOrdenById(req, res, next){
     try{
         const id = req.params.id;
         const orden = await OrdenesDAO.getById(id);
@@ -35,7 +35,7 @@ async function getOrdenById(req, res){
         next({mensaje: "ocurrio un error en getOrdenById ordenes controller", error: err});
     }
 }
-async function createOrden(req, res){
+async function createOrden(req, res, next){
     try{
         const user = req.session.user;
         const carrito = await CarritosDAO.getAll(user.carrito)
@@ -53,7 +53,7 @@ async function createOrden(req, res){
         next({mensaje: "ocurrio un error en createOrden ordenes controller", error: err});
     }
 }
-async function updateOrden(req, res){
+async function updateOrden(req, res, next){
     try{
         const items = req.body;
         const id = req.params.id;
@@ -64,7 +64,7 @@ async function updateOrden(req, res){
         next({mensaje: "ocurrio un error en updateOrden ordenes controller", error: err});
     }
 }
-async function deleteOrden(req, res){
+async function deleteOrden(req, res, next){
     try{
         const id = req.params.id;
         await OrdenesDAO.deleteById(id);

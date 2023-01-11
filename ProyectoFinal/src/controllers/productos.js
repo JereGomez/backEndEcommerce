@@ -3,7 +3,7 @@ const __dirname = path.resolve();
 import {DAOS} from '../modules/factory.ts'
 const ProductosDAO  = DAOS.getProductosDAO();
 
-async function getAll(req,res){
+async function getAll(req,res, next){
     try{
         const productos =  await ProductosDAO.getAll();
         res.send({productos: productos})
@@ -14,7 +14,7 @@ async function getAll(req,res){
 }
 
 
-async function getById(req ,res){
+async function getById(req ,res, next){
     try{
         const id = req.params.id;
         if(await ProductosDAO.getById(id) == null){
@@ -31,7 +31,7 @@ async function getById(req ,res){
     
 }
 
-async function nuevoProd(req, res){
+async function nuevoProd(req, res, next){
     try{
         const {title, price, thumbnail} = req.body;
         if(title, price, thumbnail && req.session.user.admin === true){
@@ -48,7 +48,7 @@ async function nuevoProd(req, res){
     }
 }
 
-async function actualizarProd(req, res){
+async function actualizarProd(req, res, next){
     try{
         if(req.session.user.admin === true){
             console.log('admin true y actualizo')
@@ -66,7 +66,7 @@ async function actualizarProd(req, res){
     }
 }
 
-async function eliminarProd(req, res){
+async function eliminarProd(req, res, next){
     try{ 
         if(req.session.user.admin === true){    
             const id = req.params.id;
@@ -81,7 +81,7 @@ async function eliminarProd(req, res){
     }
 }
 
-async function getByCategoria(req, res){
+async function getByCategoria(req, res, next){
     try{
         const categoria = req.params.categoria;
         res.send({categoria: await ProductosDAO.getByCategory(categoria)});
