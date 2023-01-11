@@ -2,7 +2,7 @@ import path from 'path';
 const __dirname = path.resolve();
 import {DAOS} from '../modules/factory.ts';
 const UsuariosDAO = DAOS.getUsuariosDAO();
-const CarritosDAO = DAOS.getCarritosDAO();
+import { crearCarrito } from './carrito.js';
 import {hashPassword , comparePassword} from "../utils/hash.js"
 import {mailToAdmin, mailToUser} from '../utils/email.js'
 import jwt from 'jsonwebtoken';
@@ -21,7 +21,7 @@ async function signup(req, username, password, done){
             if(username, password, nombre, edad, direccion, telefono, imagen){
                 const user = {username, nombre, password, edad, direccion, telefono, imagen};
                 user.password = hashPassword(password);
-                user.carrito = await CarritosDAO.save();
+                user.carrito = await crearCarrito;
                 const newUser = await UsuariosDAO.save(user);
                 await mailToAdmin(newUser);
                 await mailToUser({email: username}, "confirmacion");

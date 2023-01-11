@@ -8,7 +8,7 @@ import { authorization } from '../utils/middleware.js';
 //GET
 apiCarr.get ('/productos', authorization, getAllProds); //traer productos de carrito especifico
 //POST
-apiCarr.post('/', crearCarrito);
+//apiCarr.post('/', crearCarrito);
 apiCarr.post("/productos/:id_prod", agrearAlCarrito);
 //PUT
 //apiCarr.put('/:id' , actualizarCarrito);
