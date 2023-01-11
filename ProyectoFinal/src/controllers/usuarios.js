@@ -7,13 +7,14 @@ import {hashPassword , comparePassword} from "../utils/hash.js"
 import {mailToAdmin, mailToUser} from '../utils/email.js'
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
+import { networkInterfaces } from 'os';
 
 
-async function signup(req, username, password, done, next){
+async function signup(req, username, password, next){
     try{
         const auxUser = await UsuariosDAO.getByUsername(username);
         if (auxUser) {
-            return done(new Error("User already exists."), null);
+            next({mensaje: `error en signup usuarios controller`, error: "User Already exists"})
         }
         let { nombre, edad, direccion, telefono, imagen} = req.body;
 
@@ -21,29 +22,29 @@ async function signup(req, username, password, done, next){
             if(username, password, nombre, edad, direccion, telefono, imagen){
                 const user = {username, nombre, password, edad, direccion, telefono, imagen};
                 user.password = hashPassword(password);
-                user.carrito = await crearCarrito();
+                user.carrito = await crearCarrito(username, direccion);
                 const newUser = await UsuariosDAO.save(user);
                 await mailToAdmin(newUser);
                 await mailToUser({email: username}, "confirmacion");
                 return done(null, newUser);
             }
-            return done(new Error("Missing signup data."), null)
+            next({mensaje: `error en signup usuarios controller`, error: "Missing signup data."})
         }
-        return done(new Error("Password fields dont match"), null);
+        next({mensaje: `error en signup usuarios controller`, error: "Password fields dont match"})
         }
     catch(err){
-        next({mensaje: "ocurrio un error en signup usuarios controller", error: err});
+        next({mensaje: `error en signup usuarios controller`, error: err})
     }
 }
 
 
 
-async function login( username, password, done, next){
+async function login( username, password, done){
     try{
         const user = await UsuariosDAO.getByUsername(username);
         const passHash = user.password;
         if (!user || !comparePassword(password, passHash)) {
-            return done(null, null, { message: "Invalid username or password" });
+            next({mensaje: `error en login usuarios controller`, error: "Invalid username or password"})
         }
         return done(null, user);
 

@@ -24,6 +24,7 @@ app.use('/api/user' , apiUser);
 app.use('/api/productos' , apiProd ); //localHost:8080/api/productos , a partir de esa direccion se usa el router apiProd
 app.use('/api/carrito' , apiCarr ); //localHost:8080/api/carrito , a partir de esa direccion se usa el router apiCarr
 app.use('/api/ordenes' , apiOrden);
+app.use(errorHandler);
 
 
 

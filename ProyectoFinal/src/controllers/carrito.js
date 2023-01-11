@@ -15,18 +15,18 @@ async function getAllProds(req, res, next){
     }
 }
 
-async function crearCarrito(req, res, next){
+async function crearCarrito(username, direccion, req, res, next){
     try{
         const carrito = {
             prouctos: [],
-            email: req.session.user.username,
-            direccionEntrega: req.session.user.direccion
+            email: username,
+            direccionEntrega: direccion
         }
         const id = await CarritosDAO.save(carrito);
-        res.send(id)
+        return id
     }
     catch(err){
-                next({mensaje: "ocurrio un error en save carrito controller", error: err});
+         next({mensaje: "ocurrio un error en save carrito controller", error: err});
     }
 }
 
