@@ -13,7 +13,9 @@ El sistema se implementó con MongoDB, con su respectiva creación de esquemas, 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
 Routers:
+    
     mainApi:   GET uri => home
                GET uri/info => informacion del servidor
 
