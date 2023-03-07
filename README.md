@@ -1,5 +1,17 @@
-# proyectoFinalCoderHouse
-proyectoFinalCoderHouse
+# backEndSistemEcommerce
+
+En este proyecto se replica el sistema backEnd de un Ecommerce. Desde la creación de usuario e inicio de sesión con autenticación utilizando JWT. La posibilidad de agregar productos a un carrito y realizar una orden. Mails de confirmación a la hora de crear una nueva cuenta, y realizar un pedido. 
+Usuario de tipo Admin, el cual con permisos especiales puede realizar CRUD completo de todas las áreas del sistema. Al mismo le ingresan mails de notificación en el momento en el que se creó un nuevo usuario o se realizó una nueva orden.
+
+
+Se realizó una arquitectura en capas MVC, el cual muestra una organización en la organización del proyecto y permite una escalabilidad del mismo.
+Utiliza middlewares de autenticación de datos.  Cuenta con controladores dedicados  para cada router, los cuales manejan la información previamente para luego enviarla a la parte de persistencia y también a la hora de procesar la información antes de realizar una respuesta.
+
+El proyecto cuenta con Patrones de diseño, DAOS para las clases que manejan información con la base de datos, interfaces para declaración de las clases, patrón singleton para evitar la creación de múltiples instancias de una misma clase, y Factory para la creación de los DAO. Codeados con TypeScript, código el cual luego fue compilado utilizando webpack.
+
+El sistema se implementó con MongoDB, con su respectiva creación de esquemas, utilizando TypeScript para mantener un tipado y orden permitiendo manejar interfaces.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Routers:
     mainApi:   GET uri => home
