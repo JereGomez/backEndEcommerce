@@ -1,4 +1,4 @@
-# backEndSistemEcommerce
+# backEndEcommerce
 
 En este proyecto se replica el sistema backEnd de un Ecommerce. Desde la creación de usuario e inicio de sesión con autenticación utilizando JWT. La posibilidad de agregar productos a un carrito y realizar una orden. Mails de confirmación a la hora de crear una nueva cuenta, y realizar un pedido. 
 Usuario de tipo Admin, el cual con permisos especiales puede realizar CRUD completo de todas las áreas del sistema. Al mismo le ingresan mails de notificación en el momento en el que se creó un nuevo usuario o se realizó una nueva orden.
